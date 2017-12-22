@@ -1,0 +1,51 @@
+.section {
+  background-color: #2B2D42;
+  padding-top: 0 !important;
+}
+
+.section h2 {
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.event_title a {
+  font-size: 1.4em !important;
+}
+
+.custom_card_title {
+  text-transform: uppercase;
+  padding-top: 10px;
+  padding-bottom: 5px;
+  font-size: 1.4em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.custom_card_description {
+  white-space: nowrap;
+  overflow: hidden;
+  height: 100px;
+  text-overflow: ellipsis;
+}
+
+.title_div {
+  padding: 10px;
+}
+
+.event-col {
+  padding-bottom: 25px;
+}
+
+.card-background-image .card-category {
+  color: #FFFFFF;
+}
+
+.project-pills {
+  margin: 30px auto;
+}
+
+.info-p {
+  font-size: 2em;
+  font-weight: bold;
+}

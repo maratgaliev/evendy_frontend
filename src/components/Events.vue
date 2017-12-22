@@ -11,8 +11,8 @@
             {{ event.title }}
             </router-link>
           </h5>
-          <p class="card-description">
-            Design makes an important contribution to the preservation of the environment. It conserves resources and minimises physical and visual pollution throughout the lifecycle of the product....
+          <p class="card-description card_main_desc">
+            {{ event.description }}
           </p>
           <div class="card-description">
             <div class="progress">

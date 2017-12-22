@@ -24,7 +24,7 @@
                             <hr>
 
                             <div class="copyright">
-                                © 2017, made with <i class="fa fa-heart heart"></i> by Marat Galiev
+                                © 2017, made with <i class="fa fa-heart heart"></i>
                             </div>
                         </div>
                     </div>

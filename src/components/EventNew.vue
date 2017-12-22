@@ -173,7 +173,7 @@ export default {
     },
     createSuccessful (req) {
       this.error = false
-      this.$router.replace(this.$route.query.redirect || '/events')
+      this.$router.replace(this.$route.query.redirect || '/')
     },
     createFailed (errors) {
       this.error = 'Ошибка при сохранении'

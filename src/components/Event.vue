@@ -7,7 +7,8 @@
           <h4 class="info-title"> {{ event.description }} </h4>
         </div>
     </div>
-    <choice :count.sync="event.visits_count" :decision.sync="event.decision" :users.sync="event.users" v-if="currentUser"></choice>
+    <choice :count.sync="event.visits_count" :decision.sync="event.decision" :users.sync="event.users" 
+    v-if="currentUser && !(momentCheck(event.start_at))"></choice>
     <div class="row">
         <div class="col-md-4">
             <div class="info">
@@ -74,10 +75,11 @@
 </template>
 
 <script>
+import moment from 'moment'
 import Vue from 'vue'
 import Choice from './Choice.vue'
 import { mapGetters } from 'vuex'
-
+Vue.use(require('vue-moment'))
 Vue.component('choice', Choice)
 
 export default {
@@ -92,6 +94,11 @@ export default {
   },
   computed: {
     ...mapGetters({ currentUser: 'currentUser' })
+  },
+  methods: {
+    momentCheck: function (date) {
+      return moment(date).isBefore(moment())
+    }
   },
   beforeMount () {
     if (!this.event) return

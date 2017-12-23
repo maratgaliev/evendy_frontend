@@ -8,24 +8,10 @@
         <div class="custom_section section-white">
           <div class="container">
             <template v-if="$route.name == 'Events'">
+            <div class="space-top"></div>
             <div class="row">
               <div class="col-md-12 ml-auto mr-auto text-center">
                 <h2 class="title">EVENDY</h2>
-              </div>
-              <div class="project-pills">
-                  <ul class="nav nav-pills nav-pills-danger">
-                      <li class="nav-item">
-                          <a class="nav-link active" data-toggle="pill" href="#pill-1" role="tab">ВСЕ СОБЫТИЯ</a>
-                      </li>
-                      <li class="nav-item">
-                          <a class="nav-link" data-toggle="pill" href="#pill-2" role="tab">МОИ СОБЫТИЯ</a>
-                      </li>
-                  </ul>
-                  <!-- Pill panes -->
-                  <div class="tab-content">
-                    <div class="tab-pane active" id="pill-1" role="tabpanel"></div>
-                    <div class="tab-pane" id="pill-2" role="tabpanel"></div>
-                  </div>
               </div>
     			  </div>
             <div class="space-top"></div>

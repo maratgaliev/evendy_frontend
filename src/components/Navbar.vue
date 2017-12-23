@@ -1,13 +1,13 @@
 <template>
 <nav class="navbar navbar-expand-md bg-danger">
   <div class="container">
-      <button class="navbar-toggler navbar-toggler-right burger-menu" type="button" data-toggle="collapse" data-target="#navbar-primary" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-bar"></span>
-          <span class="navbar-toggler-bar"></span>
-          <span class="navbar-toggler-bar"></span>
-      </button>
       <a class="navbar-brand" href="/">EVENDY</a>
-      <div class="collapse navbar-collapse" id="navbar-primary">
+      <button class="navbar-toggler navbar-toggler-right burger-menu" type="button" data-toggle="collapse" data-target="#navbar-primary" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">
+        <span class="navbar-toggler-bar"></span>
+        <span class="navbar-toggler-bar"></span>
+        <span class="navbar-toggler-bar"></span>
+    </button>
+      <div class="navbar-collapse collapse show" id="navbarSupportedContent">
           <ul class="navbar-nav ml-auto">
               <li class="nav-item">
                 <router-link class="nav-link" :to="`/editor`">Добавить

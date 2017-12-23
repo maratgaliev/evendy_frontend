@@ -14,6 +14,7 @@
           <p class="card-description card_main_desc">
             {{ event.description }}
           </p>
+          <h6 class="card-category visits_count">{{ event.visits_count }} / {{ event.max_limit }}</h6>
           <div class="card-description">
             <div class="progress">
               <div 

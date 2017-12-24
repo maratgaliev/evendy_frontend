@@ -53,7 +53,7 @@
                     <div class="card-body">
                         <div class="card-avatar">
                             <a href="#avatar">
-                                <img src="http://demos.creative-tim.com/paper-kit-2-pro/assets/img/faces/joe-gardner-2.jpg" v-bind:alt="user.name"
+                                <img src="/static/img/user.png" v-bind:alt="user.name"
                                 >
                                 <h4 class="card-title">{{ user.name }}</h4>
                             </a>

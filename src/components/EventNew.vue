@@ -48,7 +48,7 @@
                   <input v-model="start_at" 
                   data-vv-as="'Дата и время начала'"
                   type="text" id="inputStartAt" 
-                  v-validate.initial="start_at" data-vv-rules="required|date_format:DD/MM/YYYY HH:mm"
+                  v-validate.initial="start_at" autocomplete='off' data-vv-rules="required|date_format:DD/MM/YYYY HH:mm"
                   class="event_start_at datetimepicker form-control" placeholder="Дата и время начала" />
                   <p class="text-danger" v-if="errors.has('start_at')">{{ errors.first('start_at') }}</p>
                 </div>
@@ -58,7 +58,7 @@
                   <input v-model="end_at" 
                   data-vv-as="'Дата и время окончания'"
                   type="text" id="inputEndAt" 
-                  v-validate.initial="end_at" data-vv-rules="required|date_format:DD/MM/YYYY HH:mm"
+                  v-validate.initial="end_at" autocomplete='off' data-vv-rules="required|date_format:DD/MM/YYYY HH:mm"
                   class="event_end_at datetimepicker form-control" placeholder="Дата и время окончания" />
                   <p class="text-danger" v-if="errors.has('end_at')">{{ errors.first('end_at') }}</p>
                 </div>
@@ -144,6 +144,27 @@ export default {
   },
   updated () {
     this.checkEvent()
+  },
+  mounted () {
+    $('.datetimepicker').datetimepicker({
+      locale: 'ru',
+      format: 'DD/MM/YYYY HH:mm',
+      widgetPositioning: {
+        horizontal: 'right'
+      },
+      icons: {
+        time: 'fa fa-clock-o',
+        date: 'fa fa-calendar',
+        up: 'fa fa-chevron-up',
+        down: 'fa fa-chevron-down',
+        previous: 'fa fa-chevron-left',
+        next: 'fa fa-chevron-right',
+        today: 'fa fa-screenshot',
+        clear: 'fa fa-trash',
+        close: 'fa fa-remove'
+      },
+      debug: false
+    })
   },
   methods: {
     validateBeforeSubmit (e) {

@@ -8,6 +8,7 @@ import EventNew from '@/components/EventNew'
 import Logout from '@/components/Logout'
 import News from '@/components/News'
 import Contacts from '@/components/Contacts'
+import EventEdit from '@/components/EventEdit'
 
 Vue.use(Router)
 
@@ -44,6 +45,12 @@ export default new Router({
       name: 'Event',
       props: true,
       component: Event
+    },
+    {
+      path: '/event/:event/edit',
+      name: 'EventEdit',
+      props: true,
+      component: EventEdit
     },
     {
       path: '/news',

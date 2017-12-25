@@ -6,7 +6,11 @@
         <div class="col-md-12 text-center">
           <h4 class="info-title"> {{ event.description }} </h4>
         </div>
+        <router-link class="btn btn-link btn-danger" :to="`/event/${event.slug_url}/edit`">
+          Изменить
+        </router-link>
     </div>
+
     <choice :count.sync="event.visits_count" :decision.sync="event.decision" :users.sync="event.users" 
     v-if="currentUser && !(momentCheck(event.start_at))"></choice>
     <div class="row">
@@ -109,7 +113,7 @@ export default {
         })
         .catch(function (resp) {
           console.log(resp)
-          alert('Could not load events')
+          alert('Ошибка при загрузке события')
         })
   }
 }

@@ -3,13 +3,15 @@
   <div class="row">
     <div class="col-md-8 ml-auto mr-auto">
       <div class="no-transition">
-        <h3 class="card-title text-center">Новое событие</h3>
+        <h3 class="card-title text-center">Редактирование события</h3>
+        {{ event }}
         <div class="row">
           <div class="col-md-8 ml-auto mr-auto">
             <div class="alert alert-danger" v-if="error">{{ error }}</div>
             <form role="form" id="contact-form" method="post" 
-            @submit.prevent="createEvent" v-if="!formSubmitted">
+            @submit.prevent="updateEvent" v-if="!formSubmitted">
               <div class="card-body">
+                
                 <div class="form-group label-floating">
                     <label>Наименование</label>
                     <input v-model="title" 
@@ -31,14 +33,14 @@
 
                 <div class="form-group label-floating">
                   <label>Адрес</label>
-                    <vue-google-autocomplete
-                        country="ru"
-                        id="inputAddress"
-                        v-model="address"
-                        classname="form-control"
-                        placeholder="Адрес"
-                        v-on:placechanged="getAddressData"
-                    >
+                  <vue-google-autocomplete
+                      country="ru"
+                      id="inputAddress"
+                      v-model="address"
+                      classname="form-control"
+                      placeholder="Адрес"
+                      v-on:placechanged="getAddressData"
+                  >
                   </vue-google-autocomplete>
                 </div>
 
@@ -102,6 +104,7 @@ import VueGoogleAutocomplete from 'vue-google-autocomplete'
 import VeeValidate, { Validator } from 'vee-validate'
 import messagesRU from 'vee-validate/dist/locale/ru'
 import { mapGetters } from 'vuex'
+import VueEvendycal from '../custom/evendycal'
 
 Vue.component('evendycal', require('../custom/evendycal'))
 
@@ -113,13 +116,14 @@ Vue.use(VeeValidate, {
   }
 })
 export default {
-  components: { VueGoogleAutocomplete },
-  name: 'EventNew',
+  components: { VueGoogleAutocomplete, VueEvendycal },
+  name: 'EventEdit',
   computed: {
     ...mapGetters({ currentUser: 'currentUser' })
   },
   data () {
     return {
+      event: null,
       title: '',
       description: '',
       address: '',
@@ -127,7 +131,7 @@ export default {
       end_at: '',
       max_limit: '',
       price: '',
-      telegram: 'evendy_prod',
+      telegram: '',
       error: false,
       formSubmitted: false
     }
@@ -137,17 +141,6 @@ export default {
   },
   updated () {
     this.checkEvent()
-  },
-  beforeMount () {
-    if (!this.event) return
-    var app = this
-    this.$http.get(this.$route.path, { headers: { 'Authorization': localStorage.token } })
-        .then(function (resp) {
-          app.event = resp.data['event']
-        })
-        .catch(function (resp) {
-          alert('Ошибка при загрузке события')
-        })
   },
   methods: {
     validateBeforeSubmit (e) {
@@ -167,21 +160,48 @@ export default {
         this.$router.push('/login/?redirect=/editor')
       }
     },
-    createEvent () {
+    updateEvent () {
       this.$validator.validateAll()
       if (!this.errors.any()) {
-        this.$http.post('/events', { event: { title: this.title, description: this.description, address: this.address, start_at: this.start_at, end_at: this.end_at, max_limit: parseInt(this.max_limit), price: this.price, telegram: this.telegram } }, { headers: { 'Authorization': localStorage.token } })
-        .then(request => this.createSuccessful(request))
-        .catch(() => this.createFailed())
+        this.$http.patch('/events/' + this.$route.params.event, { event: { title: this.title, description: this.description, address: this.address, start_at: this.start_at, end_at: this.end_at, max_limit: parseInt(this.max_limit), price: this.price, telegram: this.telegram } }, { headers: { 'Authorization': localStorage.token } })
+        .then(request => this.updateSuccessful(request))
+        .catch(() => this.updateFailed())
       }
     },
-    createSuccessful (req) {
+    updateSuccessful (req) {
       this.error = false
       this.$router.replace(this.$route.query.redirect || '/')
     },
-    createFailed (errors) {
-      this.error = 'Ошибка при сохранении'
+    updateFailed (errors) {
+      this.error = 'Ошибка при обновлении'
     }
+  },
+  beforeMount () {
+    var app = this
+    this.$http.get('/events/' + this.$route.params.event, { headers: { 'Authorization': localStorage.token } })
+    .then(function (resp) {
+      var event = resp.data['event']
+      app.title = event.title
+      app.description = event.description
+
+      app.$children[0].$refs.autocomplete.value = event.address
+      app.$children[0].$emit('input', event.address)
+
+      var startAt = moment(event.start_at).format('DD/MM/YYYY HH:mm')
+      app.$children[1].$refs.input.value = startAt
+      app.$children[1].$emit('input', startAt)
+
+      var endAt = moment(event.end_at).format('DD/MM/YYYY HH:mm')
+      app.$children[2].$refs.input.value = endAt
+      app.$children[2].$emit('input', endAt)
+
+      app.max_limit = event.max_limit
+      app.price = event.price
+      app.telegram = event.telegram
+    })
+    .catch(function (resp) {
+      alert('Ошибка при загрузке события')
+    })
   }
 }
 </script>

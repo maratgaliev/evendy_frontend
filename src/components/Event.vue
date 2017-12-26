@@ -103,8 +103,8 @@ export default {
     momentCheck: function (date) {
       return moment(date).isBefore(moment())
     },
-    canEdit: function (author_id) {
-      return author_id === this.currentUser.id
+    canEdit: function (authorId) {
+      return authorId === this.currentUser.id
     }
   },
   beforeMount () {

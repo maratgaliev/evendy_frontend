@@ -6,7 +6,7 @@
         <div class="col-md-12 text-center">
           <h4 class="info-title"> {{ event.description }} </h4>
         </div>
-        <router-link class="btn btn-link btn-danger" :to="`/event/${event.slug_url}/edit`">
+        <router-link v-if="currentUser && canEdit(event.author_id)" class="btn btn-link btn-danger" :to="`/event/${event.slug_url}/edit`">
           Изменить
         </router-link>
     </div>
@@ -102,6 +102,9 @@ export default {
   methods: {
     momentCheck: function (date) {
       return moment(date).isBefore(moment())
+    },
+    canEdit: function (author_id) {
+      return author_id === this.currentUser.id
     }
   },
   beforeMount () {
@@ -112,7 +115,6 @@ export default {
           app.event = resp.data['event']
         })
         .catch(function (resp) {
-          console.log(resp)
           alert('Ошибка при загрузке события')
         })
   }

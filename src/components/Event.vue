@@ -10,9 +10,19 @@
           Изменить
         </router-link>
     </div>
+    <div class="row">
+        <div class="col-md-6 mr-auto ml-auto text-center" v-if="fullLimit(event.visits_count, event.max_limit)">
+            <div class="alert alert-danger text-center">
+                Свободных мест больше нет
+            </div>
+        </div>
+    </div>
+    <choice
+        :limit.sync="event.visits_count == event.max_limit" :count.sync="event.visits_count" :decision.sync="event.decision" :users.sync="event.users" 
+        v-if="currentUser && !(momentCheck(event.start_at)) 
+        && (canRevote(event.users, currentUser, event.visits_count, event.max_limit))">
+    </choice>
 
-    <choice :count.sync="event.visits_count" :decision.sync="event.decision" :users.sync="event.users" 
-    v-if="currentUser && !(momentCheck(event.start_at))"></choice>
     <div class="row">
         <div class="col-md-4">
             <div class="info">
@@ -100,6 +110,21 @@ export default {
     ...mapGetters({ currentUser: 'currentUser' })
   },
   methods: {
+    canRevote: function (usersArr, currentUser, visitsCount, maxLimit) {
+      var canRevote = false
+      var limit = this.fullLimit(visitsCount, maxLimit)
+      if (currentUser.id) {
+        if (usersArr.filter(function (e) { return e.id === currentUser.id }).length > 0) {
+          canRevote = true
+        } else if (!limit) {
+          canRevote = true
+        }
+      }
+      return canRevote
+    },
+    fullLimit: function (visitsCount, maxLimit) {
+      return visitsCount === maxLimit
+    },
     momentCheck: function (date) {
       return moment(date).isBefore(moment())
     },

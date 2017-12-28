@@ -1,12 +1,12 @@
 <template>
   <div class="row">
     <div class="col-md-6 mr-auto ml-auto text-center" v-if="msg">
-      <div class="alert alert-danger text-center">
+      <div class="alert alert-info text-center">
         {{ msg }}
       </div>
     </div>
     <div class="col-md-12 text-center">
-      <button class="btn btn-outline-danger btn-lg" 
+      <button class="btn btn-outline-danger btn-lg"
         :class="{ 'active': statusDecision }"
         @click='handleClick'>{{ statusDecision ? notGoText : goText }}
       </button>
@@ -22,6 +22,9 @@ export default {
     decision: {
       type: Boolean
     },
+    limit: {
+      type: Boolean
+    },
     count: {
       type: Number
     },
@@ -33,6 +36,7 @@ export default {
     return {
       currentDecision: this.status,
       currentCount: this.count,
+      currentLimit: this.limit,
       goText: 'Записаться',
       notGoText: 'Отписаться',
       msg: ''
@@ -40,6 +44,10 @@ export default {
   },
   computed: {
     ...mapGetters({ currentUser: 'currentUser' }),
+    statusLimit: {
+      get () { return this.limit },
+      set (val) { this.$emit('update:limit', val) }
+    },
     statusDecision: {
       get () { return this.decision },
       set (val) { this.$emit('update:decision', val) }
@@ -74,7 +82,6 @@ export default {
           app.$forceUpdate()
         })
         .catch(function (resp) {
-          console.log(resp)
           alert('Произошла ошибка, попробуйте позже')
         })
     }

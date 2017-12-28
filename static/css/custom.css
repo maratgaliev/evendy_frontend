@@ -61,3 +61,20 @@
   text-transform: uppercase;
   line-height: 1.5em;
 }
+
+.loading {
+  position: fixed;
+  z-index: 999;
+  height: 5em;
+  width: 5em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.label_loading {
+  padding-top: 50;
+}

@@ -1,5 +1,13 @@
 <template>
-  <div class="row">
+    <div class="row align-self-center">
+        <div class="loading">
+          <loading
+              :show="show"
+              :label="label"
+              :overlay="overlay">
+          </loading>  
+        </div>
+        
     <div class="col-md-4 event-col" v-for="event, index in data['events']">
       <div class="card" v-bind:data-color="colorClass()" data-background="color">
         <div class="card-body text-center">
@@ -37,10 +45,18 @@
 </template>
 
 <script>
+import Loading from '../Loading.vue'
+
 export default {
+  components: {
+    Loading
+  },
   data: function () {
     return {
-      data: []
+      data: [],
+      show: false,
+      label: 'Загрузка',
+      overlay: true
     }
   },
   methods: {
@@ -56,15 +72,17 @@ export default {
       } else return 'danger'
     }
   },
-  beforeMount () {
+  mounted () {
     var app = this
-    this.$http.get('/events')
-        .then(function (resp) {
-          app.data = resp.data
-        })
-        .catch(function (resp) {
-          alert('Ошибка при загрузке событий')
-        })
+    app.show = true
+    this.$http.get('/events').then(function (resp) {
+      app.data = resp.data
+      app.show = false
+    })
+      .catch(function (resp) {
+        app.show = false
+        alert('Ошибка при загрузке событий')
+      })
   }
 }
 </script>

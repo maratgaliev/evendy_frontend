@@ -1,5 +1,12 @@
 <template>
   <div id="info-areas">
+        <div class="loading">
+          <loading
+              :show="show"
+              :label="label"
+              :overlay="overlay">
+          </loading>  
+        </div>
     <div class="title text-center">
         <h2>{{ event.title }}</h2>
         <h4><small>{{ event.address }}</small></h4>
@@ -11,7 +18,9 @@
         </router-link>
     </div>
     <div class="row">
-        <div class="col-md-6 mr-auto ml-auto text-center" v-if="fullLimit(event.visits_count, event.max_limit)">
+        <div class="" 
+        v-bind:class="'col-md-6 mr-auto ml-auto text-center ' + divClass"
+        v-if="fullLimit(event.visits_count, event.max_limit)">
             <div class="alert alert-danger text-center">
                 Свободных мест больше нет
             </div>
@@ -93,17 +102,26 @@ import moment from 'moment'
 import Vue from 'vue'
 import Choice from './Choice.vue'
 import { mapGetters } from 'vuex'
+import Loading from '../Loading.vue'
+
 Vue.use(require('vue-moment'))
 Vue.component('choice', Choice)
 
 export default {
+  components: {
+    Loading
+  },
   name: 'events-event',
   resource: 'Event',
   data () {
     return {
       event: {
         users: []
-      }
+      },
+      divClass: 'invisible',
+      show: false,
+      label: 'Загрузка',
+      overlay: true
     }
   },
   computed: {
@@ -132,14 +150,17 @@ export default {
       return authorId === this.currentUser.id
     }
   },
-  beforeMount () {
-    if (!this.event) return
+  mounted () {
     var app = this
+    app.show = true
     this.$http.get(this.$route.path, { headers: { 'Authorization': localStorage.token } })
         .then(function (resp) {
           app.event = resp.data['event']
+          app.show = false
+          app.divClass = 'visible'
         })
         .catch(function (resp) {
+          app.show = false
           alert('Ошибка при загрузке события')
         })
   }

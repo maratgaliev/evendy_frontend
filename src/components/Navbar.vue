@@ -18,6 +18,9 @@
                 </router-link>
               </li>
               <li class="nav-item" v-if="!currentUser">
+                <a class="nav-link" href="/register">Регистрация</a>
+              </li>
+              <li class="nav-item" v-if="!currentUser">
                 <a class="nav-link" href="/login">Вход</a>
               </li>
               <li class="nav-item" v-if="currentUser">

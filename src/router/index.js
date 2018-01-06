@@ -9,6 +9,7 @@ import Logout from '@/components/Logout'
 import News from '@/components/News'
 import Contacts from '@/components/Contacts'
 import EventEdit from '@/components/EventEdit'
+import Stats from '@/components/Stats'
 
 Vue.use(Router)
 
@@ -56,6 +57,11 @@ export default new Router({
       path: '/news',
       name: 'News',
       component: News
+    },
+    {
+      path: '/stats',
+      name: 'Stats',
+      component: Stats
     },
     {
       path: '/contacts',

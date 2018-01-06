@@ -78,3 +78,7 @@
 .label_loading {
   padding-top: 50;
 }
+
+.black_color {
+  color: #333 !important;
+}

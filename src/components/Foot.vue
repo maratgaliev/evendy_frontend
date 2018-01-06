@@ -11,6 +11,11 @@
                                     </router-link>
                                 </li>
                                 <li>
+                                    <router-link :to="`/stats`">
+                                        Статистика
+                                    </router-link>
+                                </li>
+                                <li>
                                     <router-link :to="`/news`">
                                         Новости
                                     </router-link>

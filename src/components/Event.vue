@@ -16,6 +16,10 @@
         <router-link v-if="currentUser && canEdit(event.author_id)" class="btn btn-link btn-danger" :to="`/event/${event.slug_url}/edit`">
           Изменить
         </router-link>
+
+        <button v-on:click="get_cal()" class="btn btn-link btn-danger">
+          Календарь
+        </button>
     </div>
     <div class="row">
         <div class="" 
@@ -128,6 +132,19 @@ export default {
     ...mapGetters({ currentUser: 'currentUser' })
   },
   methods: {
+    get_cal: function () {
+      this.$http.post(this.$route.path + '/calendar', {}, {responseType: 'blob'})
+        .then((response) => {
+          let blob = new Blob([response.data], { type: 'text/calendar' })
+          let link = document.createElement('a')
+          link.href = window.URL.createObjectURL(blob)
+          link.download = 'event.ics'
+          link.click()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
+    },
     canRevote: function (usersArr, currentUser, visitsCount, maxLimit) {
       var canRevote = false
       var limit = this.fullLimit(visitsCount, maxLimit)

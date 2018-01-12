@@ -17,9 +17,9 @@
           Изменить
         </router-link>
 
-        <button v-on:click="get_cal()" class="btn btn-link btn-danger">
+        <a v-on:click="get_cal()" class="btn btn-link btn-danger">
           Календарь
-        </button>
+        </a>
     </div>
     <div class="row">
         <div class="" 

@@ -29,7 +29,7 @@
                             <hr>
 
                             <div class="copyright">
-                                © 2017, made with <i class="fa fa-heart heart"></i>
+                                © 2016-2018, made with <i class="fa fa-heart heart"></i>
                             </div>
                         </div>
                     </div>

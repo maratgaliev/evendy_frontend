@@ -1,27 +1,27 @@
-# evendy_frontend
+# EVENDY
 
-> A Vue.js project
+Frontend part for the [Evendy.ru](http://evendy.ru) - Rails 5 API + VueJS web application for scheduling new events and share it between your friends.
 
-## Build Setup
+## Setup
 
-``` bash
-# install dependencies
-npm install
+Run API server from [https://github.com/maratgaliev/evendy_api](https://github.com/maratgaliev/evendy_api) and setup frontend part.
 
-# serve with hot reload at localhost:8080
-npm run dev
+Clone project.
 
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-
-# run unit tests
-npm run unit
-
-# run all tests
-npm test
+```
+$ git clone git@github.com:maratgaliev/evendy_frontend.git
+$ cd evendy_frontend
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+Change API_URL to the correct path.
+
+```
+const API_URL = process.env.API_URL || 'http://api.evendy.ru'
+```
+
+Run server.
+
+```
+$ npm run dev
+```
+

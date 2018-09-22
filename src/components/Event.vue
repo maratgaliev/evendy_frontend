@@ -51,7 +51,7 @@
         <div class="col-md-4">
             <div class="info">
                 <div class="icon icon-warning">
-                    <i class="nc-icon nc-user-run"></i>
+                    <i class="nc-icon nc-spaceship"></i>
                 </div>
                 <div class="description">
                     <h4 class="info-title"> Места </h4>
@@ -78,15 +78,16 @@
             <div class="col-md-4" v-for="user, index in event.users">
                 <div class="card card-profile card-plain">
                     <div class="card-body">
-                        <div class="card-avatar">
-                            <a href="#avatar">
-                                <img src="/static/img/user.png" v-bind:alt="user.name"
-                                >
-                                <h4 class="card-title">{{ user.name }}</h4>
-                            </a>
-                        </div>
+                        <router-link :to="`/users/${user.id}`">
+                          <div class="card-avatar">
+                            <img src="/static/img/user.png" v-bind:alt="user.name">
+                            <h4 class="card-title">{{ user.name }}</h4>
+                          </div>
+                        </router-link>
                         <p class="card-description text-center">
+                          <router-link :to="`/users/${user.id}`">
                             {{ user.name }}
+                          </router-link>
                         </p>
                     </div>
                     <!-- <div class="card-footer text-center">
@@ -96,6 +97,20 @@
                     </div> -->
                 </div>
             </div>
+        </div>
+    </div>
+
+    <div class="users_block align_center" v-if="users.length > 0 && (users.length == event.max_limit)">
+        <hr/>
+        <h3 class="title-uppercase text-center">Составы</h3>
+        <br/>
+        <div class="row">
+          <div v-bind:class="'team_' + index" class="col-md-6 event-col" v-for="arr_teams, index in getChunks(shuffle(users), 5)">
+            <p v-for="user, index in arr_teams">
+              {{ user.name }}
+            </p>
+            <hr/>
+          </div>
         </div>
     </div>
 </div>
@@ -122,6 +137,7 @@ export default {
       event: {
         users: []
       },
+      users: {},
       divClass: 'invisible',
       show: false,
       label: 'Загрузка',
@@ -132,6 +148,24 @@ export default {
     ...mapGetters({ currentUser: 'currentUser' })
   },
   methods: {
+    shuffle: function (array) {
+      let counter = array.length
+      while (counter > 0) {
+        let index = Math.floor(Math.random() * counter)
+        counter--
+        let temp = array[counter]
+        array[counter] = array[index]
+        array[index] = temp
+      }
+      return array
+    },
+    getChunks: function (myArray, chunkSize) {
+      var temporal = []
+      for (var i = 0; i < myArray.length; i += chunkSize) {
+        temporal.push(myArray.slice(i, i + chunkSize))
+      }
+      return temporal
+    },
     get_cal: function () {
       this.$http.post(this.$route.path + '/calendar', {}, {responseType: 'blob'})
         .then((response) => {
@@ -173,6 +207,7 @@ export default {
     this.$http.get(this.$route.path, { headers: { 'Authorization': localStorage.token } })
         .then(function (resp) {
           app.event = resp.data['event']
+          app.users = resp.data['event']['users']
           app.show = false
           app.divClass = 'visible'
         })

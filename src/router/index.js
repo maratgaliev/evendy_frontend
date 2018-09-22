@@ -10,6 +10,7 @@ import News from '@/components/News'
 import Contacts from '@/components/Contacts'
 import EventEdit from '@/components/EventEdit'
 import Stats from '@/components/Stats'
+import User from '@/components/User'
 
 Vue.use(Router)
 
@@ -46,6 +47,12 @@ export default new Router({
       name: 'Event',
       props: true,
       component: Event
+    },
+    {
+      path: '/users/:user',
+      name: 'User',
+      props: true,
+      component: User
     },
     {
       path: '/event/:event/edit',

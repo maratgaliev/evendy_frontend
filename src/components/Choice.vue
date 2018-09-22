@@ -6,8 +6,8 @@
       </div>
     </div>
     <div class="col-md-12 text-center">
-      <button class="btn btn-outline-danger btn-lg"
-        :class="{ 'active': statusDecision }"
+      <button
+        v-bind:class="{ 'btn btn-danger btn-lg active': statusDecision, 'btn btn-success btn-lg active': !statusDecision }"
         @click='handleClick'>{{ statusDecision ? notGoText : goText }}
       </button>
     </div>

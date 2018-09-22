@@ -82,3 +82,22 @@
 .black_color {
   color: #333 !important;
 }
+
+.custom_title {
+  color: #333 !important;
+  text-transform: uppercase;
+  font-size: 3em;
+}
+
+.custom_label {
+  margin-right: 5px;
+}
+
+.labels_row {
+  margin-bottom: 30px;
+  margin-top: 30px;
+}
+
+.align_center {
+  text-align: center;
+}

@@ -4,7 +4,6 @@ export default class User {
   static from (uo, token) {
     try {
       var userObj = JSON.parse(localStorage.getItem('userData'))
-      // let obj = JwtDecode(token)
       return new User(userObj)
     } catch (_) {
       return null

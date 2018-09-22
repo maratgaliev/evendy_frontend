@@ -198,7 +198,6 @@ export default {
       app.max_limit = event.max_limit
       app.price = event.price
       app.telegram = event.telegram
-      console.log(event.telegram)
     })
     .catch(function (resp) {
       alert('Ошибка при загрузке события')

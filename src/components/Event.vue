@@ -84,7 +84,7 @@
                             <h4 class="card-title">{{ user.name }}</h4>
                           </div>
                         </router-link>
-                        <p class="card-description text-center">
+                        <p class="card-description text-center upper">
                           <router-link :to="`/users/${user.id}`">
                             {{ user.name }}
                           </router-link>
@@ -106,7 +106,7 @@
         <br/>
         <div class="row">
           <div v-bind:class="'team_' + index" class="col-md-6 event-col" v-for="arr_teams, index in getChunks(shuffle(users), 5)">
-            <p v-for="user, index in arr_teams">
+            <p class='upper' v-for="user, index in arr_teams">
               {{ user.name }}
             </p>
             <hr/>

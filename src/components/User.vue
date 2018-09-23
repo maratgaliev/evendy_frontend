@@ -22,6 +22,8 @@
                     </div>
                     <div class="name">
                       <h1 class="title custom_title">{{ user.name }}</h1>
+                      <h3>РЕЙТИНГ: {{ user.rating }}</h3>
+                      <br/>
 						          <h5 class="description">Всего матчей: {{ user.games_visited }}</h5>
                       <br/>
                       <h6 class="description">Позиция: {{ user.position }}</h6>

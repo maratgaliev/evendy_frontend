@@ -9,7 +9,7 @@
         </div>
         
     <div class="col-md-4 event-col" v-for="event, index in data['events']">
-      <div class="card" v-bind:data-color="colorClass()" data-background="color">
+      <div class="card" v-bind:data-color="colorClass(event.start_at)" data-background="color">
         <div class="card-body text-center">
           <div class="card-category text-center">
             <span class="label label-info main-tag">{{ event.date_string }}</span>
@@ -45,6 +45,7 @@
 </template>
 
 <script>
+import moment from 'moment'
 import Loading from '../Loading.vue'
 
 export default {
@@ -60,9 +61,10 @@ export default {
     }
   },
   methods: {
-    colorClass () {
-      var colors = ['orange', 'blue', 'purple', 'brown', 'green', 'yellow']
-      return colors[Math.floor(Math.random() * colors.length)]
+    colorClass (date) {
+      var isDone = moment(date).isBefore(moment())
+      var color = isDone ? 'green' : 'blue'
+      return color
     },
     progressClass (percentage) {
       if (percentage >= 0 && percentage <= 30) {

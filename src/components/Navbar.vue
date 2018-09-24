@@ -1,5 +1,5 @@
 <template>
-<nav class="navbar navbar-expand-md bg-danger">
+<nav class="navbar navbar-expand-md bg-info">
   <div class="container">
       <a class="navbar-brand" href="/">EVENDY</a>
       <button class="navbar-toggler navbar-toggler-right burger-menu" type="button" data-toggle="collapse" data-target="#navbar-primary" aria-controls="navbarSupportedContent" aria-expanded="true" aria-label="Toggle navigation">

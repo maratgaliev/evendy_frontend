@@ -11,6 +11,7 @@ import Contacts from '@/components/Contacts'
 import EventEdit from '@/components/EventEdit'
 import Stats from '@/components/Stats'
 import User from '@/components/User'
+import Ratings from '@/components/Ratings'
 
 Vue.use(Router)
 
@@ -74,6 +75,11 @@ export default new Router({
       path: '/contacts',
       name: 'Contacts',
       component: Contacts
+    },
+    {
+      path: '/users',
+      name: 'Ratings',
+      component: Ratings
     }
   ]
 })

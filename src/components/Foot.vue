@@ -16,6 +16,11 @@
                                     </router-link>
                                 </li>
                                 <li>
+                                    <router-link :to="`/users`">
+                                        Рейтинги
+                                    </router-link>
+                                </li>
+                                <li>
                                     <router-link :to="`/news`">
                                         Новости
                                     </router-link>

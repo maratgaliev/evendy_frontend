@@ -42,6 +42,9 @@
                   </vue-google-autocomplete>
                 </div>
 
+                <input v-model="latitude" type="hidden">
+                <input v-model="longitude" type="hidden"> 
+
                 <div class="form-group label-floating">
                   <label>Дата и время начала</label>
                   <date-picker v-model="start_at" data-vv-name="start_at" ref="start_at"/>
@@ -120,6 +123,8 @@ export default {
       title: '',
       description: '',
       address: '',
+      latitude: 0,
+      longitude: 0,
       start_at: '',
       end_at: '',
       max_limit: '',
@@ -157,7 +162,11 @@ export default {
       this.formSubmitted = true
     },
     getAddressData: function (addressData, placeResultData, id) {
+      var lat = placeResultData.geometry.location.lat()
+      var lng = placeResultData.geometry.location.lng()
       this.address = placeResultData.formatted_address
+      this.latitude = lat
+      this.longitude = lng
     },
     checkEvent () {
       if (!this.currentUser) {

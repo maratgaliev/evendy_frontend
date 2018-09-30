@@ -11,7 +11,10 @@ module.exports = {
   },
   globals: {
     "$": true,
-    "jQuery": true
+    "jQuery": true,
+    "google": true,
+    "Vue": true,
+    "VueGoogleMaps": true
   },
   // https://github.com/standard/standard/blob/master/docs/RULES-en.md
   extends: 'standard',

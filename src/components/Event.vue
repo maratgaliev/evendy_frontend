@@ -79,6 +79,26 @@
             </div>
         </div>
     </div>
+      <GmapMap
+        id="map"
+        ref="map"
+        :center="center"
+        :zoom="15"
+        style="width:100%;  height: 400px;">
+        <div v-if="mapLoaded"> 
+          <GmapInfoWindow :options="infoOptions" :position="infoWindowPos" :opened="infoWinOpen" @closeclick="infoWinOpen=false">
+            {{infoContent}}
+          </GmapInfoWindow>
+          <GmapMarker
+            :key="index"
+            v-for="(m, index) in markers"
+            :position="m.position"
+            :clickable="true"
+            @click="toggleInfoWindow(m,index)"
+            :draggable="true"
+          />
+        </div>  
+      </GmapMap>
     <div class="users_block" v-if="event.users.length > 0">
         <hr/>
         <h3 class="title-uppercase text-center">Участники</h3>
@@ -130,6 +150,14 @@ import Vue from 'vue'
 import Choice from './Choice.vue'
 import { mapGetters } from 'vuex'
 import Loading from './Loading.vue'
+import * as VueGoogleMaps from 'vue2-google-maps'
+
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyCj7yumb7U_kY-Q9Jxln4SE8jUAVbEnHZA',
+    libraries: 'places'
+  }
+})
 
 Vue.use(require('vue-moment'))
 Vue.component('choice', Choice)
@@ -145,6 +173,20 @@ export default {
       event: {
         users: []
       },
+      distance: 25,
+      local_google: null,
+      infoContent: '',
+      infoWindowPos: null,
+      infoWinOpen: false,
+      infoOptions: {
+        pixelOffset: {
+          width: 0,
+          height: -35
+        }
+      },
+      mapLoaded: false,
+      markers: [],
+      center: { lat: 0, lng: 0 },
       users: {},
       divClass: 'invisible',
       show: false,
@@ -154,9 +196,60 @@ export default {
     }
   },
   computed: {
-    ...mapGetters({ currentUser: 'currentUser' })
+    ...mapGetters({ currentUser: 'currentUser', google: VueGoogleMaps.gmapApi }), google: VueGoogleMaps.gmapApi
+  },
+  watch: {
+    distance: function (n) {
+      this.getMarkers()
+    },
+    markers: function (newMarkers, o) {
+      var trafficLayer = new google.maps.TrafficLayer()
+      this.$refs.map.$mapPromise.then((map) => {
+        trafficLayer.setMap(map)
+      })
+    }
   },
   methods: {
+    searchLocation: function () {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.center = { lat: position.coords.latitude, lng: position.coords.longitude }
+      })
+    },
+    getMarkers: function () {
+      var app = this
+      app.$refs.map.$mapPromise.then(() => {
+        app.$http.get(this.$route.path, { headers: { 'Authorization': localStorage.token } })
+          .then(function (resp) {
+            app.event = resp.data['event']
+            app.users = resp.data['event']['users']
+            app.show = false
+            if (app.event.latitude && app.event.longitude) {
+              app.center = { lat: app.event.latitude, lng: app.event.longitude }
+              app.markers = [{infoText: app.event.title + ' : ' + app.event.address, position: { lat: app.event.latitude, lng: app.event.longitude }}]
+            } else {
+              app.searchLocation()
+            }
+            app.cancelled = app.event.state === 'cancelled'
+            app.divClass = 'visible'
+          })
+          .catch(function (resp) {
+            console.log(resp)
+            app.show = false
+            alert('Ошибка при загрузке события')
+          })
+        this.mapLoaded = true
+      })
+    },
+    toggleInfoWindow: function (marker, idx) {
+      this.infoWindowPos = marker.position
+      this.infoContent = marker.infoText
+      if (this.currentMidx === idx) {
+        this.infoWinOpen = !this.infoWinOpen
+      } else {
+        this.infoWinOpen = true
+        this.currentMidx = idx
+      }
+    },
     shuffle: function (array) {
       let counter = array.length
       while (counter > 0) {
@@ -222,18 +315,7 @@ export default {
   mounted () {
     var app = this
     app.show = true
-    this.$http.get(this.$route.path, { headers: { 'Authorization': localStorage.token } })
-      .then(function (resp) {
-        app.event = resp.data['event']
-        app.users = resp.data['event']['users']
-        app.show = false
-        app.cancelled = app.event.state === 'cancelled'
-        app.divClass = 'visible'
-      })
-      .catch(function (resp) {
-        app.show = false
-        alert('Ошибка при загрузке события')
-      })
+    this.getMarkers()
   }
 }
 </script>

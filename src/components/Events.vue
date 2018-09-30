@@ -8,16 +8,11 @@
           </loading>  
         </div>
     <div class="col-md-4 event-col" v-for="event, index in events">
-      <div class="card" v-bind:data-color="colorClass(event.start_at, event.state)" data-background="color">
-        <div class="card-info">
-          <div class="row">
-            <div class="col-md-12 mr-auto ml-auto text-center">
-              <span class="label label-info main-tag text-center">{{ event.date_string }}</span>
-            </div>
-          </div>
-        </div>  
+      <div class="card" v-bind:data-color="colorClass(event.start_at, event.state)" data-background="color"> 
         <div class="card-body text-center">
-
+          <div class="col-md-12 mr-auto ml-auto text-center">
+            <span class="label label-info main-tag text-center">{{ event.date_string }}</span>
+          </div>
           <h5 class="card-title custom_card_title">
             <router-link class="custom_card_title" :to="`/events/${event.slug_url}`">
             {{ event.title }}

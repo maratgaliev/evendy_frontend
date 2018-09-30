@@ -6,9 +6,9 @@ Vue.component('date-picker', {
   template: '\
     <input class="form-control datetimepicker"\
           ref="input"\
-          data-vv-rules="required|date_format:DD/MM/YYYY HH:mm"\
+          name="dp"\
+          v-validate="\'required|date_format:DD/MM/YYYY HH:mm\'"\
           v-bind:value="dateModel"\
-          v-validate.initial="dateModel"\
           autocomplete="off"\
           data-date-format="DD/MM/YYYY HH:mm"\
           placeholder="DD/MM/YYYY HH:mm"\

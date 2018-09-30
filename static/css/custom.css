@@ -105,3 +105,26 @@
 .upper {
   text-transform: uppercase;
 }
+
+.btn-white {
+  color: #FFFFFF !important;
+}
+
+.card-info {
+  margin-top: 20px;
+}
+
+.going_icon {
+  float: right;
+  text-align: right;
+  margin-top: 12px;
+  font-size: 20px;
+}
+
+.marginleft {
+  margin-left: 20px;
+}
+
+.red {
+  color: #f5593d !important;
+}

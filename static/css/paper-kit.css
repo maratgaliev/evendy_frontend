@@ -8518,7 +8518,6 @@ a.pswp__share--download:hover {
 }
 
 .card {
-  border-radius: 12px;
   box-shadow: 0 6px 10px -4px rgba(0, 0, 0, 0.15);
   background-color: #FFFFFF;
   color: #333333;
@@ -8659,7 +8658,7 @@ a.pswp__share--download:hover {
   height: 110px;
 }
 .card.card-register {
-  background-color: #FF8F5E;
+  background-color: #6ec7e0;
   border-radius: 8px;
   color: #fff;
   max-width: 350px;
@@ -8779,7 +8778,7 @@ a.pswp__share--download:hover {
   padding: 0;
 }
 .card .card-body .card-description + .card-footer {
-  padding-top: 10px;
+  padding-top: 15px;
 }
 .card .more {
   float: right;

@@ -32,12 +32,12 @@ export default {
   beforeMount () {
     var app = this
     this.$http.get('/news_items')
-        .then(function (resp) {
-          app.data = resp.data
-        })
-        .catch(function (resp) {
-          alert('Ошибка при загрузке новостей')
-        })
+      .then(function (resp) {
+        app.data = resp.data
+      })
+      .catch(function (resp) {
+        alert('Ошибка при загрузке новостей')
+      })
   }
 }
 </script>

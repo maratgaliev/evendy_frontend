@@ -1,5 +1,3 @@
-// import JwtDecode from 'jwt-decode'
-
 export default class User {
   static from (uo, token) {
     try {

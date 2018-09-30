@@ -5,34 +5,42 @@
               :show="show"
               :label="label"
               :overlay="overlay">
-          </loading>  
+          </loading>
         </div>
     <div class="title text-center">
-        <h2>{{ event.title }}</h2>
-        <h4><small>{{ event.address }}</small></h4>
-        <div class="col-md-12 text-center">
-          <h4 class="info-title"> {{ event.description }} </h4>
-        </div>
-        <router-link v-if="currentUser && canEdit(event.author_id)" class="btn btn-link btn-danger" :to="`/event/${event.slug_url}/edit`">
-          Изменить
-        </router-link>
-
-        <a v-on:click="get_cal()" class="btn btn-link btn-danger">
-          Календарь
-        </a>
+      <h2>{{ event.title }}</h2>
+      <br/>
+      <a v-on:click="cancelEvent(event)" v-if=" !cancelled && currentUser && canEdit(event.author_id)" class="red btn btn-link btn-link-danger">
+        Отменить
+      </a>
+      <router-link v-if="currentUser && canEdit(event.author_id)" class="btn btn-link btn-primary" :to="`/event/${event.slug_url}/edit`">
+        Изменить
+      </router-link>
+      <a v-on:click="get_cal()" class="btn btn-link btn-danger">
+        Календарь
+      </a>
+      <h4><small>{{ event.address }}</small></h4>
+      <div class="col-md-12 text-center">
+        <h4 class="info-title"> {{ event.description }} </h4>
+      </div>
     </div>
     <div class="row">
-        <div class="" 
-        v-bind:class="'col-md-6 mr-auto ml-auto text-center ' + divClass"
+        <div v-bind:class="'col-md-6 mr-auto ml-auto text-center ' + divClass"
         v-if="fullLimit(event.visits_count, event.max_limit)">
             <div class="alert alert-danger text-center">
-                Свободных мест больше нет
+                СВОБОДНЫХ МЕСТ БОЛЬШЕ НЕТ
+            </div>
+        </div>
+        <div v-bind:class="'col-md-6 mr-auto ml-auto text-center visible'"
+        v-if="cancelled">
+            <div class="alert alert-danger text-center">
+                СОБЫТИЕ ОТМЕНЕНО
             </div>
         </div>
     </div>
     <choice
         :limit.sync="event.visits_count == event.max_limit" :count.sync="event.visits_count" :decision.sync="event.decision" :users.sync="event.users" 
-        v-if="currentUser && !(momentCheck(event.start_at)) 
+        v-if="!cancelled && currentUser && !(momentCheck(event.start_at)) 
         && (canRevote(event.users, currentUser, event.visits_count, event.max_limit))">
     </choice>
 
@@ -121,7 +129,7 @@ import moment from 'moment'
 import Vue from 'vue'
 import Choice from './Choice.vue'
 import { mapGetters } from 'vuex'
-import Loading from '../Loading.vue'
+import Loading from './Loading.vue'
 
 Vue.use(require('vue-moment'))
 Vue.component('choice', Choice)
@@ -140,6 +148,7 @@ export default {
       users: {},
       divClass: 'invisible',
       show: false,
+      cancelled: false,
       label: 'Загрузка',
       overlay: true
     }
@@ -165,6 +174,15 @@ export default {
         temporal.push(myArray.slice(i, i + chunkSize))
       }
       return temporal
+    },
+    cancelEvent: function () {
+      this.$http.post(this.$route.path + '/cancel', {}, {})
+        .then((response) => {
+          this.cancelled = true
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     },
     get_cal: function () {
       this.$http.post(this.$route.path + '/calendar', {}, {responseType: 'blob'})
@@ -205,16 +223,17 @@ export default {
     var app = this
     app.show = true
     this.$http.get(this.$route.path, { headers: { 'Authorization': localStorage.token } })
-        .then(function (resp) {
-          app.event = resp.data['event']
-          app.users = resp.data['event']['users']
-          app.show = false
-          app.divClass = 'visible'
-        })
-        .catch(function (resp) {
-          app.show = false
-          alert('Ошибка при загрузке события')
-        })
+      .then(function (resp) {
+        app.event = resp.data['event']
+        app.users = resp.data['event']['users']
+        app.show = false
+        app.cancelled = app.event.state === 'cancelled'
+        app.divClass = 'visible'
+      })
+      .catch(function (resp) {
+        app.show = false
+        alert('Ошибка при загрузке события')
+      })
   }
 }
 </script>

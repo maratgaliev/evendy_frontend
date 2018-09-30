@@ -112,7 +112,7 @@
 <script>
 import Vue from 'vue'
 import { mapGetters } from 'vuex'
-import Loading from '../Loading.vue'
+import Loading from './Loading.vue'
 
 Vue.use(require('vue-moment'))
 
@@ -138,15 +138,15 @@ export default {
     var app = this
     app.show = true
     this.$http.get(this.$route.path, { headers: { 'Authorization': localStorage.token } })
-        .then(function (resp) {
-          app.user = resp.data['user']
-          app.show = false
-          app.divClass = 'visible'
-        })
-        .catch(function (resp) {
-          app.show = false
-          alert('Ошибка при загрузке данных')
-        })
+      .then(function (resp) {
+        app.user = resp.data['user']
+        app.show = false
+        app.divClass = 'visible'
+      })
+      .catch(function (resp) {
+        app.show = false
+        alert('Ошибка при загрузке данных')
+      })
   }
 }
 </script>

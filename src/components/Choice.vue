@@ -67,7 +67,7 @@ export default {
       this.$http.post(this.$route.path + '/apply', {},
         { headers: { 'Authorization': localStorage.token } })
         .then(function (resp) {
-          app.msg = 'Спасибо, что оповестили нас'
+          app.msg = 'СПАСИБО, ЧТО ОПОВЕСТИЛИ НАС'
           app.statusDecision = !app.statusDecision
           var usersArr = app.statusUsers.map(a => a.id)
           var currentUserId = app.currentUser.id

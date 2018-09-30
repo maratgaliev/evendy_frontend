@@ -11,7 +11,7 @@
             <div class="space-top"></div>
             <div class="row">
               <div class="col-md-12 ml-auto mr-auto text-center">
-                <h2 class="title">EVENDY</h2>
+                <h2 class="title">СОБЫТИЯ</h2>
               </div>
     			  </div>
             <div class="space-top"></div>
@@ -28,33 +28,14 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
 import Navbar from '@/components/Navbar'
 import Foot from '@/components/Foot'
+
 export default {
-  name: 'app',
-  computed: {
-    ...mapGetters({ currentUser: 'currentUser' })
-  },
-  // created () {
-  //   this.checkCurrentLogin()
-  // },
-  // updated () {
-  //   this.checkCurrentLogin()
-  // },
-  // methods: {
-  //   checkCurrentLogin () {
-  //     if (!this.currentUser && this.$route.path == '/editor') {
-  //       this.$router.push('/?redirect=' + this.$route.path)
-  //     }
-  //   }
-  // },
+  name: 'App',
   components: {
     Navbar,
     Foot
   }
 }
 </script>
-
-<style>
-</style>

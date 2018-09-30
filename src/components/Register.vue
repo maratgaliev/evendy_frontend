@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-4 col-sm-6 ml-auto mr-auto">
       <div class="card card-register">
-          <h3 class="card-title">Регистрация</h3>
+          <h3 class="text-center">РЕГИСТРАЦИЯ</h3>
           <form class="register-form" @submit.prevent="register">
             <br/>
             <div class="alert alert-danger text-center" v-if="errors">
@@ -17,10 +17,10 @@
               <input v-model="email" type="email" id="inputEmail" class="form-control no-border" placeholder="Email" >
               <label>Пароль</label>
               <input v-model="password" type="password" id="inputPassword" class="form-control no-border" placeholder="Пароль">
-              <button class="btn btn-danger btn-block btn-round">Регистрация</button>
+              <button class="btn btn-danger btn-block btn-round">Создать аккаунт</button>
           </form>
           <div class="forgot">
-            <router-link class="btn btn-link btn-danger" :to="`/login`">
+            <router-link class="btn btn-link btn-white" :to="`/login`">
               Вход
             </router-link>
           </div>

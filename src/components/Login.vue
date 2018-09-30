@@ -1,10 +1,10 @@
 <template>
   <div class="col-md-4 col-sm-6 ml-auto mr-auto">
       <div class="card card-register">
-          <h3 class="card-title">Добро пожаловать</h3>
+          <h3 class="text-center">ВХОД НА САЙТ</h3>
           <form class="register-form" @submit.prevent="login">
             <br/>
-            <div class="alert alert-danger" v-if="error">{{ error }}</div>
+            <div class="alert alert-danger text-center" v-if="error">{{ error }}</div>
               <label>Email</label>
               <input v-model="email" type="email" id="inputEmail" class="form-control no-border" placeholder="Email" required autofocus>
               <label>Пароль</label>
@@ -12,7 +12,7 @@
               <button class="btn btn-danger btn-block btn-round">Вход</button>
           </form>
           <div class="forgot">
-            <router-link class="btn btn-link btn-danger" :to="`/register`">
+            <router-link class="btn btn-link btn-white" :to="`/register`">
               РЕГИСТРАЦИЯ
             </router-link>
           </div>

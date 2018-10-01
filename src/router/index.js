@@ -7,6 +7,9 @@ import Logout from '@/components/Logout'
 import Events from '@/components/Events'
 import Event from '@/components/Event'
 import EventNew from '@/components/EventNew'
+import EventEdit from '@/components/EventEdit'
+
+import Map from '@/components/Map'
 
 import Stats from '@/components/Stats'
 import User from '@/components/User'
@@ -51,6 +54,12 @@ export default new Router({
       component: EventNew
     },
     {
+      path: '/event/:event/edit',
+      name: 'EventEdit',
+      props: true,
+      component: EventEdit
+    },
+    {
       path: '/news',
       name: 'News',
       component: News
@@ -75,6 +84,11 @@ export default new Router({
       name: 'User',
       props: true,
       component: User
+    },
+    {
+      path: '/map',
+      name: 'Map',
+      component: Map
     }
   ]
 })

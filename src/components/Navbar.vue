@@ -17,6 +17,10 @@
                 <router-link class="nav-link" :to="`/`">События
                 </router-link>
               </li>
+              <li class="nav-item">
+                <router-link class="nav-link" :to="`/map`">Карта
+                </router-link>
+              </li>
               <li class="nav-item" v-if="!currentUser">
                 <a class="nav-link" href="/register">Регистрация</a>
               </li>

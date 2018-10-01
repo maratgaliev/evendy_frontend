@@ -99,10 +99,6 @@ export default {
         this.center = { lat: position.coords.latitude, lng: position.coords.longitude }
       })
     },
-    eventExists: function (arr, lat, lng) {
-      let hasMagenicVendor = arr.some(vendor => console.log(vendor))
-      return hasMagenicVendor
-    },
     checkAndAdd: function (eventsArr) {
       var markers = this.markers
       eventsArr.forEach(function (event, i) {

@@ -32,6 +32,7 @@
                 <div class="form-group label-floating">
                   <label>Адрес</label>
                     <vue-google-autocomplete
+                        v-if="loaded"
                         country="ru"
                         id="inputAddress"
                         v-model="address"
@@ -107,10 +108,19 @@ import VueGoogleAutocomplete from 'vue-google-autocomplete'
 import VeeValidate, { Validator } from 'vee-validate'
 import { mapGetters } from 'vuex'
 import ru from 'vee-validate/dist/locale/ru'
+import * as VueGoogleMaps from 'vue2-google-maps'
+
 Vue.component('evendycal', require('../custom/evendycal'))
+
 Vue.use(VeeValidate)
 Validator.localize('ru', ru)
 
+Vue.use(VueGoogleMaps, {
+  load: {
+    key: 'AIzaSyCj7yumb7U_kY-Q9Jxln4SE8jUAVbEnHZA',
+    libraries: 'places'
+  }
+})
 export default {
   components: { VueGoogleAutocomplete },
   name: 'EventNew',
@@ -130,7 +140,8 @@ export default {
       price: '',
       telegram: 'evendy_prod',
       error: false,
-      formSubmitted: false
+      formSubmitted: false,
+      loaded: false
     }
   },
   created () {

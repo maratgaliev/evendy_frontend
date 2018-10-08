@@ -171,7 +171,8 @@ export default {
     updateEvent () {
       this.$validator.validateAll()
       if (!this.errors.any()) {
-        this.$http.patch('/events/' + this.$route.params.event, { event: { latitude: this.latitude, longitude: this.longitude, title: this.title, description: this.description, address: this.address, start_at: this.start_at, end_at: this.end_at, max_limit: parseInt(this.max_limit), price: this.price, telegram: this.telegram } }, { headers: { 'Authorization': localStorage.token } })
+        var eventHash = { event: { latitude: this.latitude, longitude: this.longitude, title: this.title, description: this.description, address: this.address, start_at: this.start_at, end_at: this.end_at, max_limit: parseInt(this.max_limit), price: this.price, telegram: this.telegram } }
+        this.$http.patch('/events/' + this.$route.params.event, eventHash, { headers: { 'Authorization': localStorage.token } })
           .then(request => this.updateSuccessful(request))
           .catch(() => this.updateFailed())
       }
@@ -206,6 +207,8 @@ export default {
         app.max_limit = event.max_limit
         app.price = event.price
         app.telegram = event.telegram
+        app.latitude = event.latitude
+        app.longitude = event.longitude
       })
       .catch(function (resp) {
         alert('Ошибка при загрузке события')

@@ -108,19 +108,12 @@ import VueGoogleAutocomplete from 'vue-google-autocomplete'
 import VeeValidate, { Validator } from 'vee-validate'
 import { mapGetters } from 'vuex'
 import ru from 'vee-validate/dist/locale/ru'
-import * as VueGoogleMaps from 'vue2-google-maps'
 
 Vue.component('evendycal', require('../custom/evendycal'))
 
 Vue.use(VeeValidate)
 Validator.localize('ru', ru)
 
-Vue.use(VueGoogleMaps, {
-  load: {
-    key: 'AIzaSyCj7yumb7U_kY-Q9Jxln4SE8jUAVbEnHZA',
-    libraries: 'places'
-  }
-})
 export default {
   components: { VueGoogleAutocomplete },
   name: 'EventNew',
@@ -151,15 +144,18 @@ export default {
     this.checkEvent()
   },
   beforeMount () {
-    if (!this.event) return
     var app = this
-    this.$http.get(this.$route.path, { headers: { 'Authorization': localStorage.token } })
-      .then(function (resp) {
-        app.event = resp.data['event']
-      })
-      .catch(function (resp) {
-        alert('Ошибка при загрузке события')
-      })
+    var scripts = document.getElementsByTagName('script')
+    var arr = Array.prototype.slice.call(scripts)
+    if (arr.length > 0) {
+      let plugin = document.createElement('script')
+      plugin.setAttribute('src', 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCj7yumb7U_kY-Q9Jxln4SE8jUAVbEnHZA&libraries=places')
+      plugin.async = true
+      plugin.onload = () => {
+        app.loaded = true
+      }
+      document.head.appendChild(plugin)
+    }
   },
   methods: {
     validateBeforeSubmit (e) {

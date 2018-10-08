@@ -147,14 +147,6 @@ export default {
     this.checkEvent()
   },
   methods: {
-    loadJs (url, callback) {
-      jQuery.ajax({
-        url: url,
-        dataType: 'script',
-        success: callback,
-        async: true
-      })
-    },
     validateBeforeSubmit (e) {
       this.$validator.validateAll()
       if (!this.errors.any()) {

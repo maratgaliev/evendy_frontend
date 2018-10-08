@@ -182,7 +182,7 @@ export default {
     createEvent () {
       this.$validator.validateAll()
       if (!this.errors.any()) {
-        this.$http.post('/events', { event: { title: this.title, description: this.description, address: this.address, start_at: this.start_at, end_at: this.end_at, max_limit: parseInt(this.max_limit), price: this.price, telegram: this.telegram } }, { headers: { 'Authorization': localStorage.token } })
+        this.$http.post('/events', { event: { latitude: this.latitude, longitude: this.longitude, title: this.title, description: this.description, address: this.address, start_at: this.start_at, end_at: this.end_at, max_limit: parseInt(this.max_limit), price: this.price, telegram: this.telegram } }, { headers: { 'Authorization': localStorage.token } })
           .then(request => this.createSuccessful(request))
           .catch(() => this.createFailed())
       }
